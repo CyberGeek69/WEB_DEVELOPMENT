@@ -29,6 +29,9 @@
         nav a:hover {
             color: orange;
         }
+        nav a.active-link {
+            color: orange;
+        }
         .page {
             display: none;
             padding: 20px;
@@ -45,10 +48,6 @@
             text-align: center;
             padding: 15px;
             margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            border-radius: 5px;
         }
         .menu-item {
             display: flex;
@@ -75,7 +74,7 @@
 
         img{
             max-width: 100%;
-            height:auto;
+            height: auto;
             border-radius: 8px;
         }
     </style>
@@ -92,10 +91,10 @@
 </header>
 
 <main>
-    <!-- Home Page -->
+    
     <div id="home" class="page active">
         <h2>Welcome to Your Daily Grind</h2>
-        <img src="photo-1521017432531-fbd92d768814.jpeg" width="400" height="400" alt="Cafe Interior">
+        <img src="photo-1521017432531-fbd92d768814.jpeg" alt="Cafe Interior" style="width: 400px; height: 400px;">
         <p>
             At The Cozy Corner Cafe, coffee is not just a drink — it’s an experience. 
             From the rich aroma of freshly ground beans to the warmth of our handmade mugs, 
@@ -126,7 +125,7 @@
         </p>
     </div>
 
-    <!-- Menu Page -->
+    
     <div id="menu" class="page">
         <h2>Our Menu</h2>
         <h3>Coffee & Espresso</h3>
@@ -145,7 +144,7 @@
         <div class="menu-item"><span>Bagel with Cream Cheese</span><span>$4.00</span></div>
     </div>
 
-    <!-- Contact Page -->
+    
     <div id="contact" class="page">
         <h2>Find Us</h2>
         <iframe 
@@ -159,8 +158,8 @@
         Mon-Fri: 7am - 6pm<br>
         Sat: 8am - 5pm<br>
         Sun: Closed</p>
-        <p><b>Call Us:</b>+91 9222163861</p>
-        <p><b>Email Us@</b> pratham.neve07@gmail.com</p>
+        <p><b>Call Us: </b><a href="tel:+919222163861">+91 9222163861</a></p>
+        <p><b>Email Us: </b><a href="mailto:pratham.neve07@gmail.com">pratham.neve07@gmail.com</a></p>
     </div>
 </main>
 
@@ -169,20 +168,51 @@
 </footer>
 
 <script>
-    let links = document.querySelectorAll('.nav-link');
-    let pages = document.querySelectorAll('.page');
+    document.addEventListener('DOMContentLoaded', () => {
+        const nav = document.querySelector('nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+ 
+       
+        function showPage(pageId) {
+            const targetPage = document.getElementById(pageId);
 
-    function showPage(id) {
-        pages.forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
+            
+            navLinks.forEach(link => {
+               
+                if (link.getAttribute('href') === `#${pageId}`) {
+                    link.classList.add('active-link');
+                } else {
+                    link.classList.remove('active-link');
+                }
+            });
+            
+            if (targetPage) {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                targetPage.classList.add('active');
+            } else {
+               
+                showPage('home');
+            }
+        }
 
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            let id = this.getAttribute('href').substring(1);
-            showPage(id);
+       
+        nav.addEventListener('click', (e) => {
+            
+            if (e.target.matches('.nav-link')) {
+                e.preventDefault();
+                const pageId = e.target.getAttribute('href').substring(1);
+                showPage(pageId);
+               
+                window.location.hash = pageId;
+            }
         });
+
+       
+        const initialPageId = window.location.hash.substring(1) || 'home';
+        showPage(initialPageId);
     });
 </script>
 
