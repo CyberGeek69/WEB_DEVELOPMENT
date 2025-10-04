@@ -128,6 +128,7 @@
     
     <div id="menu" class="page">
         <h2>Our Menu</h2>
+        
         <h3>Coffee & Espresso</h3>
         <div class="menu-item"><span>Espresso</span><span>$2.50</span></div>
         <div class="menu-item"><span>Americano</span><span>$3.00</span></div>
@@ -177,7 +178,7 @@
         function showPage(pageId) {
             const targetPage = document.getElementById(pageId);
 
-            
+
             navLinks.forEach(link => {
                
                 if (link.getAttribute('href') === `#${pageId}`) {
@@ -186,7 +187,6 @@
                     link.classList.remove('active-link');
                 }
             });
-            
             if (targetPage) {
                 pages.forEach(page => {
                     page.classList.remove('active');
@@ -200,7 +200,6 @@
 
        
         nav.addEventListener('click', (e) => {
-            
             if (e.target.matches('.nav-link')) {
                 e.preventDefault();
                 const pageId = e.target.getAttribute('href').substring(1);
